@@ -8,7 +8,8 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     zip \
     unzip \
-    libpq-dev
+    libpq-dev \
+    iproute2
 
 RUN pecl install xdebug apcu \
     && docker-php-ext-enable xdebug apcu \

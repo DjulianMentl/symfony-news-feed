@@ -26,9 +26,9 @@ services:
       - ./:/var/www/symfony
       - ./config/docker/docker-xdebug-php.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
     environment:
-      PHP_IDE_CONFIG: "serverName=php7-fpm_Docker"
+      PHP_IDE_CONFIG: "serverName=php-fpm8_Docker"
       XDEBUG_SESSION: 1
-      XDEBUG_CONFIG: 1
+      XDEBUG_CONFIG: "remote_enable=1 remote_autostart=1 remote_host=192.168.0.101"
 
   db:
       container_name: postgres
