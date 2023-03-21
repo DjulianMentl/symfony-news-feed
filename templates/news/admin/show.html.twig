@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ news.title }}{% endblock %}
+
+{% block body %}
+    <style>
+        .example-wrapper { margin: 1em auto; max-width: 1000px; width: 95%; font: 18px/1.5 sans-serif; }
+    </style>
+
+    <div class="example-wrapper">
+        <h1>{{ news.date|date("Y-m-d H:i:s") }} — {{ news.title }}</h1>
+
+        {% if news.image %}
+            <div>
+                <img src="{{ asset(imagesDirectory ~ news.image) }}" alt="Картинка новости">
+            </div>
+        {% endif %}
+
+        <div>
+            {{ news.text }}
+        </div>
+
+    </div>
+{% endblock %}

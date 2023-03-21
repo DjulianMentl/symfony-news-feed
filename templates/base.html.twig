@@ -14,6 +14,35 @@
         {% endblock %}
     </head>
     <body>
+        <header>
+            <div class="logo">
+                <h1>Новостная лента</h1>
+            </div>
+
+            <nav>
+                <ul>
+{#                    <li><a href="{{ path('/') }}">Главная</a></li>#}
+                    <li><a href="{{ path('show_all_news') }}">Новости</a></li>
+
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <li><a href="{{ path('logout') }}">Выйти</a></li>
+                    {% else %}
+                        <li><a href="{{ path('login') }}">Войти</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+
+            {% if latestNews is defined %}
+                <div class="latest-news">
+                    Дата последней новости: {{ latestNews.publishedAt|date("d.m.Y") }}
+                </div>
+            {% endif %}
+        </header>
+
         {% block body %}{% endblock %}
+
+        <footer>
+            &copy; {{ "now"|date("Y") }} News Feed. Все права защищены.
+        </footer>
     </body>
 </html>
