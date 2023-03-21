@@ -15,13 +15,13 @@ class User implements PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 100)]
+    #[ORM\Column(type: 'string', length: 100)]
     private ?string $username = null;
 
-    #[ORM\Column(length: 150)]
+    #[ORM\Column(type: 'string', length: 150)]
     private ?string $password = null;
 
-    #[ORM\Column(length: 200)]
+    #[ORM\Column(type: 'string', length: 200, unique: true)]
     private ?string $email = null;
 
     public function getId(): ?int
@@ -63,5 +63,11 @@ class User implements PasswordAuthenticatedUserInterface
         $this->email = $email;
 
         return $this;
+    }
+
+
+    public function getUserIdentifier(): string
+    {
+        return $this->email;
     }
 }

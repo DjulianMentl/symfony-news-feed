@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\News;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -38,6 +39,15 @@ class NewsRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+
+    public function getQuery(): Query
+    {
+        return $this->createQueryBuilder('n')
+            ->orderBy('n.date', 'DESC')
+            ->getQuery();
+    }
+
 
 //    /**
 //     * @return News[] Returns an array of News objects

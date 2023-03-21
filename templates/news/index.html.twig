@@ -1,20 +1,28 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello NewsController!{% endblock %}
+{% block title %}Список новостей{% endblock %}
 
 {% block body %}
 <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    .example-wrapper { margin: 1em auto; max-width: 1200px; width: 95%; font: 18px/1.5 sans-serif; }
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>Список новостей</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/var/www/symfony/src/Controller/NewsController.php'|file_link(0) }}">src/Controller/NewsController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/var/www/symfony/templates/news/index.html.twig'|file_link(0) }}">templates/news/index.html.twig</a></code></li>
-    </ul>
+    {% for news in pagination %}
+        <div>
+            <a href="{{ path('show-news', {'id': news.id}) }}"><h1>{{ news.date|date("Y-m-d H:i:s") }} — {{ news.title }}</h1></a>
+            <div class="news-preview">{{ news.preview }}</div>
+        </div>
+    {% endfor %}
+
+
+    <div>
+            <div class="pagination">
+                {{ knp_pagination_render(pagination) }}
+            </div>
+    </div>
+
 </div>
 {% endblock %}
