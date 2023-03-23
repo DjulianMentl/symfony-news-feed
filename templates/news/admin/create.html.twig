@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Добавление новости{% endblock %}
+
+{% block body %}
+    <h1>Создайте новую новость</h1>
+
+    {{ include('news/admin/_create_form.html.twig') }}
+
+    <a href="{{ path('admin_show_all_news') }}">Назад</a>
+{% endblock %}

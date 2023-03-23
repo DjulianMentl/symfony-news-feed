@@ -12,7 +12,7 @@
 
         {% if news.image %}
             <div>
-                <img src="{{ asset(imagesDirectory ~ news.image) }}" alt="Картинка новости">
+                <img src="{{ asset('images/' ~ news.image) }}" alt="Картинка новости">
             </div>
         {% endif %}
 
@@ -20,5 +20,11 @@
             {{ news.text }}
         </div>
 
+        <div>
+            <a href="{{ path('admin_show_all_news') }}">Назад</a>
+            <a href="{{ path('news_edit', {'id': news.id}) }}">Редактировать</a>
+
+            {{ include('news/admin/_delete_form.html.twig') }}
+        </div>
     </div>
 {% endblock %}

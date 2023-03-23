@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Type;
 
-class NewsType extends AbstractType
+class EditType extends AbstractType
 {
     private ParameterBagInterface $params;
 
@@ -50,6 +50,7 @@ class NewsType extends AbstractType
             ->add('image', FileType::class, [
                 'required' => false,
                 'label' => 'Изображение',
+                'mapped' => false,
                 'constraints' => [
                     new Image([
                         'maxWidth'   => $this->params->get('image_max_width'),
