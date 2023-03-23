@@ -3,28 +3,23 @@
 {% block title %}{{ news.title }}{% endblock %}
 
 {% block body %}
-    <style>
-        .example-wrapper { margin: 1em auto; max-width: 1000px; width: 95%; font: 18px/1.5 sans-serif; }
-    </style>
-
     <div class="example-wrapper">
-        <h1>{{ news.date|date("Y-m-d H:i:s") }} — {{ news.title }}</h1>
+        <h1 class="h2">{{ news.date|date("Y-m-d H:i:s") }} — {{ news.title }}</h1>
 
         {% if news.image %}
-            <div>
+            <div class="my-3">
                 <img src="{{ asset('images/' ~ news.image) }}" alt="Картинка новости">
             </div>
         {% endif %}
 
-        <div>
+        <div class="my-3">
             {{ news.text }}
         </div>
 
-        <div>
-            <a href="{{ path('admin_show_all_news') }}">Назад</a>
-            <a href="{{ path('news_edit', {'id': news.id}) }}">Редактировать</a>
-
-            {{ include('news/admin/_delete_form.html.twig') }}
+        <div class="my-5  d-flex">
+            <div><a class="btn btn-sm btn-light btn-outline-dark" href="{{ path('admin_show_all_news') }}">Назад</a></div>
+            <div class="mx-2"><a class="btn btn-sm btn-light btn-outline-dark" href="{{ path('news_edit', {'id': news.id}) }}">Редактировать</a></div>
+            <div>{{ include('news/admin/_delete_form.html.twig') }}</div>
         </div>
     </div>
 {% endblock %}

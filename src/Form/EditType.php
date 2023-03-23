@@ -39,12 +39,18 @@ class EditType extends AbstractType
                     new Type(['type' => 'string']),
                     new Length(['max' => 1000]),
                 ],
+                'attr' => [
+                    'rows' => 6,
+                ],
             ])
             ->add('text', TextareaType::class, [
                 'label' => 'Текст новости',
                 'constraints' => [
                     new Type(['type' => 'string']),
                     new Length(['max' => 4000]),
+                ],
+                'attr' => [
+                    'rows' => 14,
                 ],
             ])
             ->add('image', FileType::class, [

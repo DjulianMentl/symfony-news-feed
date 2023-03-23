@@ -105,7 +105,7 @@ class NewsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->news->save($news, $form, $imagePathDir);
 
-            return $this->redirectToRoute('admin_show_all_news', [], Response::HTTP_SEE_OTHER);
+            return $this->show($news);
         }
 
         return $this->render('news/admin/edit.html.twig', [

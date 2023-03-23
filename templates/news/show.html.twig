@@ -3,22 +3,21 @@
 {% block title %}{{ news.title }}{% endblock %}
 
 {% block body %}
-    <style>
-        .example-wrapper { margin: 1em auto; max-width: 1000px; width: 95%; font: 18px/1.5 sans-serif; }
-    </style>
-
     <div class="example-wrapper">
-        <h1>{{ news.date|date("Y-m-d H:i:s") }} — {{ news.title }}</h1>
+        <h1 class="h2">{{ news.date|date("Y-m-d H:i:s") }} — {{ news.title }}</h1>
 
         {% if news.image %}
-            <div>
+            <div class="my-3">
                 <img src="{{ asset('images/' ~ news.image) }}" alt="Картинка новости">
             </div>
         {% endif %}
 
-        <div>
+        <div class="my-3">
             {{ news.text }}
         </div>
 
+        <div class="my-5  d-flex">
+            <div><a class="btn btn-sm btn-light btn-outline-dark" href="{{ path('show_all_news') }}">Назад</a></div>
+        </div>
     </div>
 {% endblock %}

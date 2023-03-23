@@ -3,28 +3,25 @@
 {% block title %}Список новостей{% endblock %}
 
 {% block body %}
-    <style>
-        .example-wrapper { margin: 1em auto; max-width: 1200px; width: 95%; font: 18px/1.5 sans-serif; }
-    </style>
-
     <div class="example-wrapper">
         <h1>Список новостей</h1>
 
         {% for news in pagination %}
-            <div>
-                <a href="{{ path('admin_show_news', {'id': news.id}) }}"><h1>{{ news.date|date("Y-m-d H:i:s") }} — {{ news.title }}</h1></a>
-                <div class="news-preview">{{ news.preview }}</div>
+            <div class="my-5">
+                <a class="text-decoration-none" href="{{ path('admin_show_news', {'id': news.id}) }}">
+                    <h1 class="text-dark h2">{{ news.date|date("Y-m-d H:i:s") }} — {{ news.title }}</h1>
+                </a>
+                <div>{{ news.preview }}</div>
             </div>
         {% endfor %}
 
-        <div>
-            <a href="{{ path('news_create') }}">Создать новость</a>
+        <div class="my-2">
+            <a class="btn btn-sm btn-light btn-outline-dark" href="{{ path('news_create') }}">Добавить новость</a>
         </div>
-        <div>
+        <div class="my-4">
             <div class="pagination">
                 {{ knp_pagination_render(pagination) }}
             </div>
         </div>
-
     </div>
 {% endblock %}

@@ -3,10 +3,11 @@
 {% block title %}Edit News{% endblock %}
 
 {% block body %}
-    <h1>Edit News</h1>
+    <h1>Редактировать новость</h1>
 
     {{ include('news/admin/_form.html.twig', {'button_label': 'Сохранить'}) }}
 
-    <a href="{{ path('admin_show_all_news') }}">Назад</a>
-
+    <div class="mb-5">
+        <a class="btn btn-sm btn-light btn-outline-dark" href="{{ path('admin_show_news', {'id': news.id}) }}">Назад</a>
+    </div>
 {% endblock %}
