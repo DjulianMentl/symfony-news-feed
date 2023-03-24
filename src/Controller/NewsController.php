@@ -2,18 +2,21 @@
 
 namespace App\Controller;
 
-use App\Entity\News;
+use App\Events\NewsViewedEvent;
 use App\Services\NewsServiceInterface;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
+
 
 
 class NewsController extends AbstractController
 {
+    public const COOKIE_LIFETIME = 10;
+
     private NewsServiceInterface $news;
 
     public function __construct(NewsServiceInterface $news)
@@ -36,12 +39,19 @@ class NewsController extends AbstractController
 
 
     #[Route('/news/{id}', name: 'show_news')]
-    public function show(int $id): Response
+    public function show(EventDispatcherInterface $dispatcher, Request $request, int $id): Response
     {
         $news = $this->news->show($id);
 
-        return $this->render('news/show.html.twig', [
+        $response = $this->render('news/show.html.twig', [
             'news' => $news,
         ]);
+
+        if (!$request->cookies->has('counter_' . $id)) {
+            $event = new NewsViewedEvent($news, $response);
+            $dispatcher->dispatch($event,NewsViewedEvent::NAME);
+        }
+
+        return $response;
     }
 }

@@ -6,9 +6,10 @@ namespace App\Services;
 use App\Entity\News;
 use App\Repository\NewsRepository;
 use App\Exception\ExceptionMessages;
-use DateTime;
+use Exception;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
@@ -70,15 +71,19 @@ class NewsService implements NewsServiceInterface
         return $news;
     }
 
-    public function save(News $news, $form, $imagePathDir): void
+    public function save(News $news, Form $form = null, string $imagePathDir = ''): void
     {
-        $news->setDate(new DateTime('now'));
-        $image = $form['image']->getData();
-        if ($image) {
-            $fileName = $this->fileUploader->upload($image, $imagePathDir);
-            $news->setImage($fileName);
+        try {
+            isset($form) ? $image = $form['image']->getData(): $image = null;
+            if ($image) {
+                $fileName = $this->fileUploader->upload($image, $imagePathDir);
+                $news->setImage($fileName);
+            }
+
+            $this->newsRepository->save($news, true);
+        } catch (Exception $e) {
+            throw new NotFoundHttpException(ExceptionMessages::NEWS_SAVE_ERROR_MESSAGE);
         }
 
-        $this->newsRepository->save($news, true);
     }
 }
