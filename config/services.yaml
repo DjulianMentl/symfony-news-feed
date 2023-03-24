@@ -8,6 +8,11 @@ parameters:
     image_max_width: 300
     image_max_height: 300
     images_directory: '%kernel.project_dir%/public/images'
+    default_admin_email: e.rindya@yandex.ru
+    default_sender_email: e.ryndya@worksolutions.ru
+    admin_email: "%env(string:default:default_admin_email:ADMIN_EMAIL)%"
+    sender_email: "%env(string:default:default_sender_email:SENDER_EMAIL)%"
+
 
 services:
     # default configuration for services in *this* file
@@ -29,3 +34,6 @@ services:
     App\EventListeners\NewsViewedListener:
         tags:
             - {name: kernel.event_listener, event: news.viewed}
+
+#    App\Services\EmailNewsRatingNotification:
+#        $adminEmail: '%admin_email%'
