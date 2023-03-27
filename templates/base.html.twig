@@ -15,7 +15,8 @@
     </head>
     <body>
     <div class="container">
-        <header>
+        <header class="d-flex justify-content-between w-100">
+
             <nav class="navbar navbar-expand-lg navbar-light bg-lightgrey border">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="{{ path('show_all_news') }}">Новостная лента</a>
@@ -45,18 +46,10 @@
                         </ul>
                     </div>
                 </div>
-
-
-            <div>
-                Дата последней новости: 23.03.2023
-            </div>
-
-            {% if latestNews is defined %}
-                <div>
-                    Дата последней новости: {{ latestNews.publishedAt|date("d.m.Y") }}
-                </div>
-            {% endif %}
             </nav>
+
+            {{ component('last_news_date') }}
+
         </header>
 
         {% block body %}{% endblock %}

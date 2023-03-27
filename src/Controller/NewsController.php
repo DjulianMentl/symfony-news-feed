@@ -6,7 +6,6 @@ use App\Events\NewsViewedEvent;
 use App\Services\NewsServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,8 +14,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class NewsController extends AbstractController
 {
-    public const COOKIE_LIFETIME = 10;
-
     private NewsServiceInterface $news;
 
     public function __construct(NewsServiceInterface $news)

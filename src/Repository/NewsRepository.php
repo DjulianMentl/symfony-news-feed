@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\News;
+use DateTimeInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
@@ -46,6 +47,17 @@ class NewsRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('n')
             ->orderBy('n.date', 'DESC')
             ->getQuery();
+    }
+
+    public function findLatestDate(): string
+    {
+        return $this->getEntityManager()->createQueryBuilder()
+            ->select('n.date')
+            ->from(News::class, 'n')
+            ->orderBy('n.date', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getScalarResult()[0]['date'];
     }
 
 

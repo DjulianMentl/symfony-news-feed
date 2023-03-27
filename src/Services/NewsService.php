@@ -9,7 +9,7 @@ use App\Exception\ExceptionMessages;
 use Exception;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
@@ -71,7 +71,7 @@ class NewsService implements NewsServiceInterface
         return $news;
     }
 
-    public function save(News $news, Form $form = null, string $imagePathDir = ''): void
+    public function save(News $news, FormInterface $form = null, string $imagePathDir = ''): void
     {
         try {
             isset($form) ? $image = $form['image']->getData(): $image = null;
@@ -84,6 +84,10 @@ class NewsService implements NewsServiceInterface
         } catch (Exception $e) {
             throw new NotFoundHttpException(ExceptionMessages::NEWS_SAVE_ERROR_MESSAGE);
         }
+    }
 
+    public function getLastNewsDate(): string
+    {
+        return $this->newsRepository->findLatestDate();
     }
 }

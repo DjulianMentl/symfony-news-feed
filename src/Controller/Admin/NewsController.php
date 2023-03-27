@@ -6,7 +6,6 @@ use App\Entity\News;
 use App\Form\EditType;
 use App\Form\NewsType;
 use App\Repository\NewsRepository;
-use App\Services\FileUploaderInterface;
 use App\Services\NewsServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,7 +34,6 @@ class NewsController extends AbstractController
             'imagesDirectory' => $this->getParameter('images_directory'),
         ]);
     }
-
 
 //    /**
 //     * @throws Exception
@@ -97,12 +95,15 @@ class NewsController extends AbstractController
     #[Route('/news/{id}/edit', name: 'news_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, News $news): Response
     {
-        $form = $this->createForm(EditType::class, $news);
         $imagePathDir = $this->getParameter('images_directory');
-
+        $form = $this->createForm(EditType::class, $news);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($request->get('del-img')) {
+                $news->setImage(null);
+            }
+
             $this->news->save($news, $form, $imagePathDir);
 
             return $this->show($news);
