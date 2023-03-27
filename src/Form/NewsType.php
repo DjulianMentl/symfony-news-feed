@@ -55,6 +55,7 @@ class NewsType extends AbstractType
             ])
             ->add('image', FileType::class, [
                 'required' => false,
+                'mapped' => false,
                 'label' => 'Изображение',
                 'constraints' => [
                     new Image([

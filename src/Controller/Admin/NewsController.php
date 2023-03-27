@@ -3,7 +3,6 @@
 namespace App\Controller\Admin;
 
 use App\Entity\News;
-use App\Form\EditType;
 use App\Form\NewsType;
 use App\Repository\NewsRepository;
 use App\Services\NewsServiceInterface;
@@ -35,34 +34,6 @@ class NewsController extends AbstractController
         ]);
     }
 
-//    /**
-//     * @throws Exception
-//     */
-//    #[Route('/news/new', name: 'app_news_new', methods: ['GET', 'POST'])]
-//    public function new(Request $request, NewsRepository $newsRepository, FileUploaderInterface $fileUploader): Response
-//    {
-//        $news = new News();
-//        $form = $this->createForm(NewsType::class, $news);
-//        $form->handleRequest($request);
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $image = $form['image']->getData();
-//
-//            if ($image) {
-//                $fileName = $fileUploader->upload($image, $this->getParameter('images_directory'));
-//
-//                $news->setImage($fileName);
-//            }
-//
-//            $newsRepository->save($news, true);
-//
-//            return $this->redirectToRoute('admin_show_all_news', [], Response::HTTP_SEE_OTHER);
-//        }
-//
-//        return $this->render('news/admin/new.html.twig', [
-//            'form' => $form,
-//        ]);
-//    }
 
     #[Route('/news/create', name: 'news_create', methods: ['GET'])]
     public function create(): Response
@@ -77,7 +48,6 @@ class NewsController extends AbstractController
     {
         $news = new News();
         $form = $this->createForm(NewsType::class, $news);
-        $imagePathDir = $this->getParameter('images_directory');
         $form->handleRequest($request);
 
         if (!$form->isValid()) {
@@ -86,7 +56,7 @@ class NewsController extends AbstractController
             ]);
         }
 
-        $this->news->save($news, $form, $imagePathDir);
+        $this->news->save($news, $form, $this->getParameter('images_directory'));
 
         return $this->redirectToRoute('admin_show_all_news', [], Response::HTTP_SEE_OTHER);
     }
@@ -95,8 +65,7 @@ class NewsController extends AbstractController
     #[Route('/news/{id}/edit', name: 'news_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, News $news): Response
     {
-        $imagePathDir = $this->getParameter('images_directory');
-        $form = $this->createForm(EditType::class, $news);
+        $form = $this->createForm(NewsType::class, $news);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -104,7 +73,7 @@ class NewsController extends AbstractController
                 $news->setImage(null);
             }
 
-            $this->news->save($news, $form, $imagePathDir);
+            $this->news->save($news, $form, $this->getParameter('images_directory'));
 
             return $this->show($news);
         }

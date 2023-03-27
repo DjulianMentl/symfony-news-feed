@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\News;
-use DateTimeInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;

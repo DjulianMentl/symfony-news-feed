@@ -1,14 +1,15 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
+
     {%  if news.image %}
+        <div class="my-3">
+            <img src="{{ asset('images/' ~ news.image) }}" alt="Картинка новости">
 
-    <div class="my-3">
-        <img src="{{ asset('images/' ~ news.image) }}" alt="Картинка новости">
-
-        <label class="checkbox">
-            <input name="del-img" type="checkbox" value="news.image"> Удалить изображение
-        </label>
-    </div>
+            <label class="checkbox">
+                <input name="del-img" type="checkbox" value="news.image"> Удалить изображение
+            </label>
+        </div>
     {% endif %}
+
     <button class="my-3 btn btn-sm btn-light btn-outline-dark">{{ button_label|default('Сохранить') }}</button>
 {{ form_end(form) }}
